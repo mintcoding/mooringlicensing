@@ -109,7 +109,6 @@
                         name="vessel-registration-documents"
                         :isRepeatable="true"
                         :documentActionUrl="vesselRegistrationDocumentUrl"
-                        :replace_button_by_text="true"
                     />
                 </div>
             </div>
@@ -122,7 +121,6 @@
                         name="hull-identification-number-documents"
                         :isRepeatable="true"
                         :documentActionUrl="hullIdentificationNumberDocumentUrl"
-                        :replace_button_by_text="true"
                     />
                 </div>
             </div>

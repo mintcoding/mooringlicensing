@@ -233,9 +233,8 @@
                             label="Provide evidence"
                             ref="electoral_roll_documents"
                             name="electoral-roll-documents"
-                            :isRepeatable="true"
+                            :isRepeatable="false"
                             :documentActionUrl="electoralRollDocumentUrl"
-                            :replace_button_by_text="true"
                         />
                     </div>
                 </div>

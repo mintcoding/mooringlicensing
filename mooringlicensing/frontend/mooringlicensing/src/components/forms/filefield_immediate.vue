@@ -13,20 +13,33 @@
             </template>
             <div v-if="show_spinner"><i class='fa fa-2x fa-spinner fa-spin'></i></div>
         </template>
-        <template v-if="!readonly" v-for="n in repeat">
+        <label class="custom-file-upload" :for="name">Upload File
+        </label>
+        <input 
+            :id="name" 
+            :name="name" 
+            type="file" 
+            :multiple="false"
+            :accept="fileTypes" 
+            @change="handleChangeWrapper" 
+            />
+        <!--template v-if="!readonly" v-for="n in repeat">
             <template v-if="isRepeatable || (!isRepeatable && num_documents()==0) && !show_spinner">
+                <label class="custom-file-upload" :for="name">Upload File
                 <input 
-                    :id="name + n" 
-                    :name="name" type="file" 
+                    :id="name" 
+                    :name="name" 
+                    type="file" 
                     :data-que="n" 
                     :accept="fileTypes" 
                     @change="handleChangeWrapper" 
-                    :class="ffu_input_element_classname" />
+                    />
+                </label>
                 <template v-if="replace_button_by_text">
                     <span :id="'button-' + name + n" @click="button_clicked(name + n)" class="ffu-input-text">{{ text_string }}</span>
                 </template>
             </template>
-        </template>
+        </template-->
     </div>
 </template>
 
@@ -60,12 +73,13 @@ export default {
         isRepeatable:Boolean,
         readonly:Boolean,
         documentActionUrl: String,
-
+        /*
         // For optional text button
         replace_button_by_text: {
             type: Boolean,
             default: false
         },
+        */
         text_string: {
             type: String,
             default: 'Attach Document'
@@ -236,10 +250,14 @@ export default {
                 );
                 this.$nextTick(async () => {
                     // must emit event here
-                    this.handleChange(e);
+                    //this.handleChange(e);
+                    await this.save_document(e);
                 });
             } else {
-                this.handleChange(e);
+                //this.handleChange(e);
+                this.$nextTick(async () => {
+                    await this.save_document(e);
+                });
             }
         },
 
@@ -260,7 +278,7 @@ export default {
                 formData.append('_file', this.uploadFile(e));
                 formData.append('csrfmiddlewaretoken', this.csrf_token);
                 let res = await Vue.http.post(this.document_action_url, formData)
-
+                /*
                 if (this.replace_button_by_text){
                     let button_name = 'button-' + this.name + e.target.dataset.que
                     let elem_to_remove = document.getElementById(button_name)
@@ -268,7 +286,7 @@ export default {
                         elem_to_remove.remove()
                     }
                 }
-                
+                */
                 this.documents = res.body.filedata;
                 this.commsLogId = res.body.comms_instance_id;
                 this.show_spinner = false;
@@ -307,10 +325,24 @@ export default {
 
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+    /*
     input {
         box-shadow:none;
     }
+    */
+    /*
+    .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+    }
+    input[type="file"] {
+        display: none;
+        color: red;
+    }
+    */
     .ffu-wrapper {
 
     }

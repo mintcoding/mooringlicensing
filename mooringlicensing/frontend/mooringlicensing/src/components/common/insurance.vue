@@ -19,7 +19,6 @@
                     name="insurance-certificate-documents"
                     :isRepeatable="true"
                     :documentActionUrl="insuranceCertificateDocumentUrl"
-                    :replace_button_by_text="true"
                 />
             </div>
         </div>
