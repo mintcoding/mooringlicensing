@@ -14,7 +14,8 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from rest_framework import viewsets, serializers, status, generics, views
-from rest_framework.decorators import detail_route, list_route,renderer_classes
+#from rest_framework.decorators import detail_route, list_route,renderer_classes
+from rest_framework.decorators import action, renderer_classes, parser_classes
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, BasePermission
@@ -101,7 +102,8 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = EmailUser.objects.all()
     serializer_class = UserSerializer
 
-    @detail_route(methods=['POST',])
+    #@detail_route(methods=['POST',])
+    @action(detail=True, methods=['post',])
     def update_personal(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -120,7 +122,8 @@ class UserViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['POST',])
+    #@detail_route(methods=['POST',])
+    @action(detail=True, methods=['post',])
     def update_contact(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -139,7 +142,8 @@ class UserViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['POST',])
+    #@detail_route(methods=['POST',])
+    @action(detail=True, methods=['post',])
     def update_address(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -187,7 +191,8 @@ class UserViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['POST',])
+    #@detail_route(methods=['POST',])
+    @action(detail=True, methods=['post',])
     def update_system_settings(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -213,7 +218,8 @@ class UserViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['POST',])
+    #@detail_route(methods=['POST',])
+    @action(detail=True, methods=['post',])
     def upload_id(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -234,7 +240,8 @@ class UserViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['GET', ])
+    #@detail_route(methods=['GET', ])
+    @action(detail=True, methods=['get',])
     def pending_org_requests(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -254,7 +261,8 @@ class UserViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['GET', ])
+    #@detail_route(methods=['GET', ])
+    @action(detail=True, methods=['get',])
     def action_log(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -272,7 +280,8 @@ class UserViewSet(viewsets.ModelViewSet):
             raise serializers.ValidationError(str(e))
 
 
-    @detail_route(methods=['GET',])
+    #@detail_route(methods=['GET',])
+    @action(detail=True, methods=['get',])
     def comms_log(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -289,7 +298,8 @@ class UserViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['POST',])
+    #@detail_route(methods=['POST',])
+    @action(detail=True, methods=['post',])
     @renderer_classes((JSONRenderer,))
     def add_comms_log(self, request, *args, **kwargs):
         try:

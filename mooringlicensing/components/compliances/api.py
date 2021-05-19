@@ -19,7 +19,8 @@ from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from rest_framework import viewsets, serializers, status, generics, views
-from rest_framework.decorators import detail_route, list_route, renderer_classes
+#from rest_framework.decorators import detail_route, list_route, renderer_classes
+from rest_framework.decorators import action, renderer_classes, parser_classes
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser, BasePermission
@@ -91,7 +92,8 @@ class ComplianceViewSet(viewsets.ModelViewSet):
     #     )
     #     return Response(data)
 
-    @detail_route(methods=['GET',])
+    #@detail_route(methods=['GET',])
+    @action(detail=True, methods=['get',])
     def internal_compliance(self, request, *args, **kwargs):
         instance = self.get_object()
         serializer = InternalComplianceSerializer(instance,context={'request':request})
@@ -138,7 +140,8 @@ class ComplianceViewSet(viewsets.ModelViewSet):
 #        serializer = self.get_serializer(result_page, context={'request':request}, many=True)
 #        return paginator.get_paginated_response(serializer.data)
 
-    @detail_route(methods=['POST',])
+    #@detail_route(methods=['POST',])
+    @action(detail=True, methods=['post',])
     @renderer_classes((JSONRenderer,))
     def submit(self, request, *args, **kwargs):
         try:
@@ -184,7 +187,8 @@ class ComplianceViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['GET',])
+    #@detail_route(methods=['GET',])
+    @action(detail=True, methods=['get',])
     def assign_request_user(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -201,7 +205,8 @@ class ComplianceViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['POST',])
+    #@detail_route(methods=['POST',])
+    @action(detail=True, methods=['post',])
     def delete_document(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -220,7 +225,8 @@ class ComplianceViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['POST',])
+    #@detail_route(methods=['POST',])
+    @action(detail=True, methods=['post',])
     def assign_to(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -245,7 +251,8 @@ class ComplianceViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['GET',])
+    #@detail_route(methods=['GET',])
+    @action(detail=True, methods=['get',])
     def unassign(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -262,7 +269,8 @@ class ComplianceViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['GET',])
+    #@detail_route(methods=['GET',])
+    @action(detail=True, methods=['get',])
     def accept(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -279,7 +287,8 @@ class ComplianceViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['GET',])
+    #@detail_route(methods=['GET',])
+    @action(detail=True, methods=['get',])
     def amendment_request(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -297,7 +306,8 @@ class ComplianceViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['GET',])
+    #@detail_route(methods=['GET',])
+    @action(detail=True, methods=['get',])
     def action_log(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -314,7 +324,8 @@ class ComplianceViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['GET',])
+    #@detail_route(methods=['GET',])
+    @action(detail=True, methods=['get',])
     def comms_log(self, request, *args, **kwargs):
         try:
             instance = self.get_object()
@@ -331,7 +342,8 @@ class ComplianceViewSet(viewsets.ModelViewSet):
             print(traceback.print_exc())
             raise serializers.ValidationError(str(e))
 
-    @detail_route(methods=['POST',])
+    #@detail_route(methods=['POST',])
+    @action(detail=True, methods=['post',])
     @renderer_classes((JSONRenderer,))
     def add_comms_log(self, request, *args, **kwargs):
         try:
@@ -463,7 +475,8 @@ class CompliancePaginatedViewSet(viewsets.ModelViewSet):
 
         return qs
 
-    @list_route(methods=['GET',])
+    #@list_route(methods=['GET',])
+    @action(detail=False, methods=['get',])
     def list_external(self, request, *args, **kwargs):
         """
         User is accessing /external/ page
